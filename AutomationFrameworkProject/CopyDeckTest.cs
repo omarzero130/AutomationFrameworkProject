@@ -11,9 +11,15 @@ namespace AutomationFrameworkProject
 {
     public class CopyDeckTest
     {
+        [OneTimeSetUp]
+        public void beforeAll()
+        {
+            FW.CreateTestResultDirectory();
+        }
         [SetUp]
         public void BeforeEach()
         {
+            FW.SetLogger();
             Driver.Init();
             Pagess.Init();
             Driver.GoTo("https://statsroyale.com/");

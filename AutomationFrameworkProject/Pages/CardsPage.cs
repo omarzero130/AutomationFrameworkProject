@@ -22,7 +22,7 @@ namespace AutomationFrameworkProject.Pages
             return this;
         }
 
-        public IWebElement GetCardByName(String CardName)
+        public Element GetCardByName(string CardName)
         {
             if (CardName.Contains(""))
             {
@@ -35,7 +35,7 @@ namespace AutomationFrameworkProject.Pages
 
     public class CardsPageMap
     {
-        public IWebElement Card(String name) => Driver.FindElement(By.CssSelector($"a[href*='{name}']"));
-        
+        public Element Card(string name) => Driver.FindElement(By.CssSelector($"a[href*='{name}']"), $"Card: {name}");
+
     }
 }

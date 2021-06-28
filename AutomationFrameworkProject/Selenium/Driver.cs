@@ -10,7 +10,8 @@ namespace AutomationFrameworkProject.Selenium
     public static class Driver
     {
         [ThreadStatic]
-        private static IWebDriver _driver;
+        private static RemoteWebDriver _driver;
+        
 
         [ThreadStatic]
         public static Wait Wait;
@@ -22,12 +23,12 @@ namespace AutomationFrameworkProject.Selenium
             "start-maximized",
             "enable-automation",
             "--no-sandbox");
-            _driver = new ChromeDriver(Path.GetFullPath(@"../../../../" + "_drivers"), options,TimeSpan.FromMinutes(2));
+            FW.Log.Info("Browser : Chrome");
+            _driver = new ChromeDriver(Path.GetFullPath(@"../../../../" + "_drivers"), options, TimeSpan.FromMinutes(4));
             Wait = new Wait(10);
         }
-      
 
-        public static IWebDriver Current => _driver ??throw new NullReferenceException("Driver is null");
+        public static RemoteWebDriver Current => _driver ?? throw new NullReferenceException("Driver is null");
 
         public static string Title => Current.Title;
 
@@ -35,17 +36,32 @@ namespace AutomationFrameworkProject.Selenium
         {
             /*if(url!.StartsWith("https"))
             {
-                url = $"http://{url}";l       
+                url = $"http://{url}";l
             }*/
+            FW.Log.Info(url);
             Current.Navigate().GoToUrl(url);
         }
-        public static IWebElement FindElement(By by)
+
+        public static Element FindElement(By by, string elementName)
         {
-            return Current.FindElement(by);
+            return new Element(Current.FindElement(by), elementName)
+            {
+                FoundBy = by
+            };
         }
-        public static IList<IWebElement> FindElements(By by)
+
+        public static Elements FindElements(By by)
         {
-            return Current.FindElements(by);
+            return new Elements(Current.FindElements(by))
+            {
+                FoundBy = by
+            };
+        }
+
+        public static void Quit()
+        {
+            FW.Log.Info("Close Browser");
+            Current.Quit();
         }
     }
 }

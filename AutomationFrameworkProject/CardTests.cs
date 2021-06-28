@@ -9,9 +9,16 @@ namespace AutomationFrameworkProject
 {
     public class CardTests
     {
+        [OneTimeSetUp]
+        public void BeforeAll()
+        {
+            FW.CreateTestResultDirectory();
+        }
+
         [SetUp]
         public void BeforeEach()
         {
+            FW.SetLogger();
             Driver.Init();
             Pagess.Init();
             Driver.GoTo("https://statsroyale.com/");
