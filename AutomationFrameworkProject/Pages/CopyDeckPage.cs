@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using AutomationFrameworkProject.Selenium;
 using OpenQA.Selenium;
-using AutomationFrameworkProject.Pages;
-using AutomationFrameworkProject.Selenium;
-using NUnit.Framework;
+using SeleniumExtras.WaitHelpers;
 
 namespace AutomationFrameworkProject.Pages
 {
-
-    //when the method stays on the same page we don't need to return itself but when it takes us to another we need to return itself 
+    //when the method stays on the same page we don't need to return itself but when it takes us to another we need to return itself
     //we need to change the type of the function to the class name
     //to get xpath from console typr $X(xpath)
     public class CopyDeckPage
@@ -32,14 +27,14 @@ namespace AutomationFrameworkProject.Pages
         {
             Map.NoButton.Click();
             AcceptCookies();
-            Driver.Wait.Until(drvr => Map.OtherStoresButton.Displayed);
+            Driver.Wait.Until(ExpectedConditions.ElementIsVisible(Map.OtherStoresButton.FoundBy));
             return this;
         }
 
         public void AcceptCookies()
         {
             Map.AcceptCookiesButton.Click();
-            Driver.Wait.Until(drvr => !Map.AcceptCookiesButton.Displayed);
+            Driver.Wait.Until(WaitConditions.ElementNotDisplayed(Map.AcceptCookiesButton));
         }
 
         public void OpenAppStore()
@@ -51,9 +46,8 @@ namespace AutomationFrameworkProject.Pages
         {
             Map.GooglePlayButton.Click();
         }
-
-
     }
+
     public class CopyDeckPageMap
     {
         public Element YesButton => Driver.FindElement(By.Id("button-open"), "Yes Button");

@@ -4,38 +4,19 @@ using AutomationFrameworkProject.Selenium;
 using AutomationFrameworkProject.Services;
 using NUnit.Framework;
 using System.Collections.Generic;
+using AutomationFrameworkProject.Base;
 
 namespace AutomationFrameworkProject
 {
-    public class CardTests
+    public class CardTests : TestBase
     {
-        [OneTimeSetUp]
-        public void BeforeAll()
-        {
-            FW.CreateTestResultDirectory();
-        }
-
-        [SetUp]
-        public void BeforeEach()
-        {
-            FW.SetLogger();
-            Driver.Init();
-            Pagess.Init();
-            Driver.GoTo("https://statsroyale.com/");
-        }
-
-        [TearDown]
-        public void AfterEach()
-        {
-            Driver.Current.Quit();
-        }
-
+       
         static IList<Card> apiCards = new ApiCardService().GetAllCards();
 
         [Test]
         [Category("cards")]
         [TestCaseSource("apiCards")]
-        [Parallelizable(ParallelScope.Children)]
+        /*[Parallelizable(ParallelScope.Children)]*/
         public void Ice_spirit_is_on_cards_page(Card carrd)
         {
             var cardOnPage = Pagess.Cards.GoTo().GetCardByName(carrd.Name);
@@ -46,7 +27,7 @@ namespace AutomationFrameworkProject
         [Test]
         [Category("cards")]
         [TestCaseSource("apiCards")]
-        [Parallelizable(ParallelScope.Children)]
+        /*[Parallelizable(ParallelScope.Children)]*/
         public void Card_headers_are_correct_on_Card_Details_page(Card cardd)
         {
             Pagess.Cards.GoTo().GetCardByName(cardd.Name).Click();

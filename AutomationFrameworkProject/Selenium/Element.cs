@@ -4,10 +4,10 @@ using System.Drawing;
 
 namespace AutomationFrameworkProject.Selenium
 {
+
     public class Element : IWebElement
     {
         private readonly IWebElement _element;
-        public IWebElement Current => _element ?? throw new System.NullReferenceException("_element is null");
 
         public readonly string Name;
 
@@ -18,6 +18,8 @@ namespace AutomationFrameworkProject.Selenium
             _element = element;
             Name = name;
         }
+
+        public IWebElement Current => _element ?? throw new System.NullReferenceException("_element is null.");
 
         public string TagName => Current.TagName;
 
@@ -40,7 +42,7 @@ namespace AutomationFrameworkProject.Selenium
 
         public void Click()
         {
-            FW.Log.Step($"Clikc {Name}");
+            FW.Log.Step($"Click {Name}");
             Current.Click();
         }
 
@@ -67,6 +69,12 @@ namespace AutomationFrameworkProject.Selenium
         public string GetProperty(string propertyName)
         {
             return Current.GetProperty(propertyName);
+        }
+
+        public void Hover()
+        {
+            var actions = new Actions(Driver.Current);
+            actions.MoveToElement(Current).Perform();
         }
 
         public void SendKeys(string text)

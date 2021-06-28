@@ -1,6 +1,7 @@
-﻿using System;
-using OpenQA.Selenium;
+﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
+using System;
+
 namespace AutomationFrameworkProject.Selenium
 {
     public class Wait
@@ -25,8 +26,10 @@ namespace AutomationFrameworkProject.Selenium
         {
             return _wait.Until(condition);
         }
+
+        public IWebElement Until(Func<IWebDriver, IWebElement> condition)
+        {
+            return _wait.Until(condition);
+        }
     }
-
 }
-
-

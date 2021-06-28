@@ -1,50 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using NUnit.Framework;
-using OpenQA.Selenium;
-using AutomationFrameworkProject.Pages;
+﻿using AutomationFrameworkProject.Pages;
 using AutomationFrameworkProject.Selenium;
-
+using NUnit.Framework;
+using AutomationFrameworkProject.Base;
 
 namespace AutomationFrameworkProject
 {
-    public class CopyDeckTest
+    public class CopyDeckTest : TestBase
     {
-        [OneTimeSetUp]
-        public void beforeAll()
-        {
-            FW.CreateTestResultDirectory();
-        }
-        [SetUp]
-        public void BeforeEach()
-        {
-            FW.SetLogger();
-            Driver.Init();
-            Pagess.Init();
-            Driver.GoTo("https://statsroyale.com/");
-        }
-
-        [TearDown]
-        public void AfterEach()
-        {
-            Driver.Current.Quit();
-
-        }
-
-        
         [Test]
         [Category("copydeck")]
         public void User_can_copy_the_deck()
         {
-
             Pagess.DeckBuilder.Goto().AddCardsManually();
             Pagess.DeckBuilder.CopySuggestedDeck();
             Pagess.CopyDeck.Yes();
             Assert.That(Pagess.CopyDeck.Map.CopiedMessage.Displayed);
         }
+
         [Test]
-        
         public void User_opens_app_store()
         {
             Pagess.DeckBuilder.Goto().AddCardsManually();
@@ -62,7 +35,5 @@ namespace AutomationFrameworkProject
             Pagess.CopyDeck.No().OpenGooglePlay();
             Assert.AreEqual("Clash Royale - Apps on Google Play", Driver.Title);
         }
-
-
     }
 }
