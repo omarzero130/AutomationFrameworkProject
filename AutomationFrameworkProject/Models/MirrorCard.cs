@@ -10,6 +10,6 @@
 
         public override string Type { get; set; } = "Spell";
 
-        public override string Arena { get; set; } = "Arena 12";
+        public override  int Arena{ get; set; } = 12;
     }
 }

@@ -17,9 +17,9 @@ namespace AutomationFrameworkProject
         [Category("cards")]
         [TestCaseSource("apiCards")]
         /*[Parallelizable(ParallelScope.Children)]*/
-        public void Ice_spirit_is_on_cards_page(Card carrd)
+        public void Ice_spirit_is_on_cards_page(Card card)
         {
-            var cardOnPage = Pagess.Cards.GoTo().GetCardByName(carrd.Name);
+            var cardOnPage = Pagess.Cards.GoTo().GetCardByName(card.Name);
             Assert.That(cardOnPage.Displayed); 
           
         } 
@@ -28,16 +28,19 @@ namespace AutomationFrameworkProject
         [Category("cards")]
         [TestCaseSource("apiCards")]
         /*[Parallelizable(ParallelScope.Children)]*/
-        public void Card_headers_are_correct_on_Card_Details_page(Card cardd)
+        public void Card_headers_are_correct_on_Card_Details_page(Card card)
         {
-            Pagess.Cards.GoTo().GetCardByName(cardd.Name).Click();
+            Pagess.Cards.GoTo().GetCardByName(card.Name).Click();
 
             var cardOnPage = Pagess.CardDetails.GetBaseCard();
-            var card = new InMemoryCardService().GetCardByName(cardd.Name);
+
+            if (cardOnPage.Type == "troop")
+                cardOnPage.Type = "character";
+
             Assert.AreEqual(card.Name, cardOnPage.Name);
-            Assert.AreEqual(card.Type, cardOnPage.Type);
             Assert.AreEqual(card.Arena, cardOnPage.Arena);
             Assert.AreEqual(card.Rarity, cardOnPage.Rarity);
+            Assert.That(card.Type.Contains(cardOnPage.Type));
         }
     }
 }

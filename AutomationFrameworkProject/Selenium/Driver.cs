@@ -23,7 +23,7 @@ namespace AutomationFrameworkProject.Selenium
               "enable-automation",
               "--no-sandbox");*/
             _driver = DriverFactory.Build(FW.Config.Driver.Browser);
-            Wait = new Wait(10);
+            Wait = new Wait(FW.Config.Driver.WaitSeconds);
             //Window = new Window();
             //Window.Maximize();
             _driver.Manage().Window.Maximize();
@@ -43,6 +43,7 @@ namespace AutomationFrameworkProject.Selenium
             Current.Navigate().GoToUrl(url);
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "SecurityIntelliSenseCS:MS Security rules violation", Justification = "<Pending>")]
         public static void TakeScreenShot(string imageName)
         {
             var ss = ((ITakesScreenshot)Current).GetScreenshot();
